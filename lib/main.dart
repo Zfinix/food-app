@@ -8,7 +8,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Arts App',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: 'ProductSans',
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(),
@@ -22,74 +24,43 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool isButton = false;
+  Image image = Image.asset('assets/images/image.png');
+
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Center(
-        child: buildContainer(context),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: buildUI(),
       ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-
-  Container buildContainer(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-          // Box decoration takes a gradient
-          gradient: LinearGradient(
-        // Where the linear gradient begins and ends
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        // Add one stop for each color. Stops should increase from 0 to 1
-        stops: [0.2, 0.9],
-        colors: [
-          Color.fromRGBO(223, 50, 239, 1),
-          Color.fromRGBO(244, 17, 40, 1),
-        ],
-      )),
-      child: buildUI(),
     );
   }
 
   Column buildUI() => Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        //crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          image(),
-          Row(
-            children: <Widget>[
-              customXMargin(40),
-              Text('Abstract Painting',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold)),
-            ],
+          Flexible(flex: 3, child: imageBuilder()),
+          customYMargin(30),
+          Flexible(
+            flex: 1,
+            child: Text('Opps Page Not Found',
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400)),
           ),
-          customYMargin(10),
-          Row(
-            children: <Widget>[
-              customXMargin(40),
-              Text('Lorem ipsum por es it para mi',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w200)),
-            ],
+          customYMargin(30),
+          Flexible(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(height: 1.5, fontWeight: FontWeight.w100)),
+            ),
           ),
-          customYMargin(20),
-          Row(
-            children: <Widget>[
-              customXMargin(40),
-              Text('12 4/5 x 9/5 in \n32.5 x 25 m',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w200)),
-            ],
-          ),
-          customYMargin(80),
-          buildFabs()
+          customYMargin(150),
+          Flexible(flex: 1, child: isButton ? buildFabs() : buildButton())
         ],
       );
 
@@ -97,31 +68,63 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Fab(
-            icon: 'download',
-            title: 'Save',
+            icon: Icons.close,
+            title: 'Close',
+            onTap: toggleButton,
           ),
           Fab(
-            icon: 'like',
+            icon: Icons.refresh,
             title: 'Like',
+            onTap: toggleButton,
           ),
           Fab(
-            icon: 'share',
-            title: 'Share',
+            icon: Icons.home,
+            title: 'Home',
+            onTap: toggleButton,
           )
         ],
       );
 
-  Widget image() => Container(child: Image.asset('assets/images/image.png'));
+  Widget imageBuilder() {
+    return AnimatedContainer(
+      child: image,
+      curve: Curves.linear,
+      duration: Duration(seconds: 5),
+    );
+  }
+
+  buildButton() {
+    return RaisedButton(
+      color: Colors.blueAccent,
+      textColor: Colors.white,
+      child: Text('Reload'),
+      onPressed: toggleButton,
+    );
+  }
+
+  toggleButton() {
+    isButton
+        ? setState(() {
+            isButton = false;
+            image = Image.asset('assets/images/image.png');
+          })
+        : setState(() {
+            isButton = true;
+            image = Image.asset('assets/images/night.png');
+          });
+  }
 }
 
 class Fab extends StatelessWidget {
   final String title;
-  final String icon;
+  final IconData icon;
+  final Function onTap;
 
   const Fab({
     Key key,
     @required this.title,
     @required this.icon,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -129,14 +132,13 @@ class Fab extends StatelessWidget {
     return Column(
       children: <Widget>[
         FloatingActionButton(
-          backgroundColor: Colors.white,
-          onPressed: () {},
-          tooltip: '$title',
-          child: Image.asset(
-            'assets/icons/$icon.png',
-            scale: 1.2,
-          ),
-        ),
+            backgroundColor: Colors.white,
+            onPressed: onTap,
+            tooltip: '$title',
+            child: Icon(
+              icon,
+              color: Colors.blueAccent,
+            )),
         customYMargin(10),
         Text(
           '$title',
