@@ -1,4 +1,4 @@
-package com.example.art;
+package com.example.food;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
