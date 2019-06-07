@@ -183,7 +183,7 @@ class FoodCard extends StatelessWidget {
                     image: new AssetImage('assets/images/$image.jpg'),
                     fit: BoxFit.cover,
                   ))),
-          ListT 5 ile(
+          ListTile(
             contentPadding: EdgeInsets.only(left: 43, top: 13),
             title: Text(
               '$title',
