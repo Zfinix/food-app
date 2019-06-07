@@ -74,13 +74,19 @@ class _MyHomePageState extends State<MyHomePage> {
               title: 'Bread Bun',
               subtitle: 'American, Bread',
               image: 'food1',
-              price: '2,500',
+              price: '2,000',
+            ),
+              new FoodCard(
+              title: 'Cheese Pizza',
+              subtitle: 'Italian, Pizza',
+              image: 'food3', 
+              price: '2,000',
             ),
           ],
         ));
   }
 
-  Column buildUI() => Column(
+   buildUI() => Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -132,24 +138,21 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       );
 
-  Widget imageBuilder() {
-    return AnimatedContainer(
+   imageBuilder() => AnimatedContainer(
       child: image,
       curve: Curves.linear,
       duration: Duration(seconds: 5),
     );
-  }
 
-  buildButton() {
-    return CupertinoButton(
+  buildButton() => CupertinoButton(
       color: Colors.orange,
+      pressedOpacity: 0.6,
       child: Text(
         'View Ingredients',
         style: TextStyle(color: Colors.white),
       ),
       onPressed: () {},
     );
-  }
 }
 
 class FoodCard extends StatelessWidget {
@@ -169,59 +172,59 @@ class FoodCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: (screenWidth(context)*0.9),
+      width: (screenWidth(context) * 0.9),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Container(
               margin: const EdgeInsets.symmetric(horizontal: 15),
               height: 210,
-              width: (screenWidth(context) * 0.9),
+              width: (screenWidth(context) * 0.97),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15.0),
                   image: new DecorationImage(
                     image: new AssetImage('assets/images/$image.jpg'),
                     fit: BoxFit.cover,
                   ))),
-          ListTile(
-            contentPadding: EdgeInsets.only(left: 43, top: 13),
-            title: Text(
-              '$title',
-              style: TextStyle(fontSize: 24),
-            ),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                customYMargin(8),
-                Text(
-                  '$subtitle',
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300),
-                ),
-                Divider(),
-              ],
-            ),
-            trailing: Container(
-              margin: EdgeInsets.only(
-                right: 23,
-              ),
-              padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: Colors.orange,
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              child: Text(
-                'N $price',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w300),
-              ),
-            ),
-          ),
+          buildListTile(),
         ],
       ),
     );
   }
+
+  buildListTile() => ListTile(
+      contentPadding: EdgeInsets.only(left: 33, top: 13),
+      title: Text(
+        '$title',
+        style: TextStyle(fontSize: 24),
+      ),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          customYMargin(8),
+          Text(
+            '$subtitle',
+            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300),
+          ),
+          Divider(),
+        ],
+      ),
+      trailing: Container(
+        margin: EdgeInsets.only(
+          right: 18,
+        ),
+        padding: EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          color: Colors.orange,
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: Text(
+          'N $price',
+          style: TextStyle(
+              color: Colors.white, fontSize: 13, fontWeight: FontWeight.w300),
+        ),
+      ),
+    );
 }
 
 customYMargin(double y) => SizedBox(height: y);
