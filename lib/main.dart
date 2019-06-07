@@ -147,12 +147,6 @@ class _MyHomePageState extends State<MyHomePage> {
             )),
       );
 
-  imageBuilder() => AnimatedContainer(
-        child: image,
-        curve: Curves.linear,
-        duration: Duration(seconds: 5),
-      );
-
   buildButton() => CupertinoButton(
         color: Colors.orange,
         pressedOpacity: 0.6,
