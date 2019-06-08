@@ -1,6 +1,11 @@
 # food
 
 A new Flutter project.
+<p float="left">
+  <img src="https://raw.githubusercontent.com/Zfinix/food-app/master/screenshots/shot1.png" width="300" />
+  <img src="https://raw.githubusercontent.com/Zfinix/food-app/master/screenshots/shot2.png" width="300" /> 
+</p>
+
 
 ## Getting Started
 
