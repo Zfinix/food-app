@@ -26,7 +26,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Image image = Image.asset('assets/images/food1.jpg');
   bool isLiked = false;
 
   @override
